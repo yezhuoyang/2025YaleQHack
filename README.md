@@ -13,6 +13,8 @@ cd path\to\your\project
 py -m venv yalehack
 yalehack\Scripts\activate
 pip install -r requirements.txt
+pip install cirq
+pip install ply
 ```
 
 Mac
