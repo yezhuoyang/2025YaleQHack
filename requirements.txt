@@ -1,5 +1,7 @@
 lark==1.2.2
 bloqade==0.22.5
+cirq
+ply
 
 # after installing these two, the repeat-util-success is still not working
 pyqrack
@@ -12,3 +14,9 @@ pyqt5>=5.15.11,
 ffmpeg>=1.4,
 pydantic<2.0 # pydantic 2.0 is not compatible with bloqade
 
+# for notebook
+ipykernel
+
+# for QEC package
+qiskit==1.1.1
+qiskit-aer==0.15.1
