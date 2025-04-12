@@ -14,9 +14,8 @@ pyqt5>=5.15.11,
 ffmpeg>=1.4,
 pydantic<2.0 # pydantic 2.0 is not compatible with bloqade
 
-# for notebook
-ipykernel
+cirq
+ply
 
-# for QEC package
 qiskit==1.1.1
 qiskit-aer==0.15.1
