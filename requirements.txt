@@ -1,11 +1,14 @@
 lark==1.2.2
 bloqade==0.22.5
 
-# this is problematic
+# after installing these two, the repeat-util-success is still not working
 pyqrack
 bloqade.pyqrack
 
 # for visualization
-matplotlib
+tqdm
+matplotlib>=3.9.2,
+pyqt5>=5.15.11,
+ffmpeg>=1.4,
 pydantic<2.0 # pydantic 2.0 is not compatible with bloqade
 
