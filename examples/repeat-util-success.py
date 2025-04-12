@@ -1,5 +1,5 @@
 from bloqade import qasm2
-
+from bloqade.pyqrack import PyQrack  # noqa: E402
 
 @qasm2.extended
 def prep_resource_state(theta: float):
@@ -8,7 +8,6 @@ def prep_resource_state(theta: float):
     qasm2.h(qubit)
     qasm2.rz(qubit, theta)
     return qubit
-
 
 @qasm2.extended
 def z_phase_gate_postselect(target: qasm2.Qubit, theta: float) -> qasm2.Qubit:
@@ -19,7 +18,6 @@ def z_phase_gate_postselect(target: qasm2.Qubit, theta: float) -> qasm2.Qubit:
     if creg[0] == 1:
         qasm2.x(ancilla)
     return ancilla
-
 
 @qasm2.extended
 def z_phase_gate_recursive(target: qasm2.Qubit, theta: float) -> qasm2.Qubit:
@@ -35,8 +33,6 @@ def z_phase_gate_recursive(target: qasm2.Qubit, theta: float) -> qasm2.Qubit:
     if creg[0] == 1:
         qasm2.x(ancilla)
     return ancilla
-
-
 
 @qasm2.extended
 def z_phase_gate_loop(target: qasm2.Qubit, theta: float, attempts: int):
@@ -55,7 +51,6 @@ def z_phase_gate_loop(target: qasm2.Qubit, theta: float, attempts: int):
     
 theta = 0.1  # Specify some Z rotation angle. Note that this is being defined
 
-
 @qasm2.extended
 def postselect_main():
     target = qasm2.qreg(1)
@@ -73,12 +68,9 @@ def loop_main():
     target = qasm2.qreg(1)
     z_phase_gate_loop(target[0], theta, 5)
     
-from bloqade.pyqrack import PyQrack  # noqa: E402
-
 device = PyQrack()
 qreg = device.run(postselect_main)
 print(qreg)
-
 
 from bloqade.qasm2.emit import QASM2  # noqa: E402
 from bloqade.qasm2.parse import pprint  # noqa: E402
@@ -97,4 +89,4 @@ pprint(qasm_postselect)
 print("\n\n--- Loop ---")
 pprint(qasm_loop)
 
-
+payload = target.emit_str(postselect_main)

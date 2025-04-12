@@ -3,7 +3,6 @@ import math
 from bloqade import qasm2
 from kirin.dialects import ilist
 
-
 def ghz_linear(n: int):
     n_qubits = int(2**n)
 
@@ -20,7 +19,6 @@ def ghz_linear(n: int):
             qasm2.cx(qreg[i - 1], qreg[i])
 
     return ghz_linear_program
-
 
 def ghz_log_depth(n: int):
     n_qubits = int(2**n)
@@ -41,7 +39,6 @@ def ghz_log_depth(n: int):
             layer_of_cx(i_layer=i, qreg=qreg)
 
     return ghz_log_depth_program
-
 
 def ghz_log_simd(n: int):
     n_qubits = int(2**n)
@@ -78,16 +75,8 @@ def ghz_log_simd(n: int):
 
     return ghz_log_depth_program
 
-
-
-
-if __name__ == "__main__":
-
-    target = qasm2.emit.QASM2(
-        allow_parallel=True,
-    )
-    ast = target.emit(ghz_log_simd(4))
-    qasm2.parse.pprint(ast)
-
-
-
+target = qasm2.emit.QASM2(
+    allow_parallel=True,
+)
+ast = target.emit(ghz_log_simd(4))
+qasm2.parse.pprint(ast)
