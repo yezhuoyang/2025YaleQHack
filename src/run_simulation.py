@@ -56,16 +56,16 @@ def run_simulation(json_filename: str):
     noise_model = get_noise_model()
 
     x_x = np.array([0, 1, 2, 3, 4])
-    x_c = np.random.rand(4, 5)
+    x_c = np.random.rand(4, 4)
     x = PPoly(x_c, x_x)
 
     y_x = np.array([0, 1, 2, 3, 4])
-    y_c = np.random.rand(4, 5)
+    y_c = np.random.rand(4, 4)
     y = PPoly(y_c, y_x)
 
     animate_qpu_state = AnimateQPUState(
-        block_durations=[5.0],
-        gate_events=[(3.0, GateEvent("Test", {"Test": 1}, 10.0))],
+        block_durations=[15.0],
+        gate_events=[(3.0, GateEvent("GlobalCZGate", {"Test": 1}, 10.0))],
         atoms=[AtomTrajectory(1, x, y, [(0.0, "Test")])],
         slm_zone=[(0.0, 0.0)],
         aod_moves=[AODMoveEvent(1.0, 1.0, x, y)],
@@ -82,7 +82,9 @@ def run_simulation(json_filename: str):
         atom_animation_state=animate_qpu_state,
         noise_model=noise_model,
     )
-    open(json_filename, "w").write(json.dumps(quera_simulation_result.to_json()))
+    open(json_filename, "w").write(
+        json.dumps(quera_simulation_result.to_json(), indent=4)
+    )
     
 if __name__ == "__main__":
-    run_simulation("simulation.json")
+    run_simulation("./data/simulation.json")
