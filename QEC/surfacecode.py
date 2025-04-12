@@ -3,6 +3,14 @@ from typing import List
 import numpy as np
 from qiskit_aer import AerSimulator
 from qiskit.visualization import plot_histogram
+from bloqade import qasm2
+
+
+from bloqade.qasm2.emit import QASM2 # the QASM2 target
+from bloqade.qasm2.parse import pprint # the QASM2 pretty printer
+
+
+
 
 class stabalizer:
     
@@ -61,6 +69,12 @@ class surfaceCode:
         Q13:(3,0), Q14:(3,1), Q15:(3,2), Q16:(3,3)                                     
         '''
         self._circuit=QuantumCircuit(2*distance**2-1,distance**2-1)
+        
+        self._qreg=None
+        self._creg=None
+        self.initilize_circuit(self._qreg,self._creg)
+        
+        
         self._ndataqubits=distance**2
         self._nstab=distance**2-1
         self._nXstab=0
@@ -70,6 +84,7 @@ class surfaceCode:
         self.calc_stab()
         self._Hmatrix=np.zeros((self._nstab, 2*self._ndataqubits),dtype=int)
         self.calculate_H_matrix()
+        
         
     def get_xy(self,qubit:int)->tuple:
         return qubit//self.__distance,qubit%self.__distance
@@ -264,13 +279,66 @@ class surfaceCode:
     
     
     
+
+@qasm2.extended
+def add_cnot_qasm2(qindex1: int,qindex2: int,qreg: qasm2.QReg):
+    qasm2.cx(qreg[qindex1], qreg[qindex2])        
+    return qreg
+
+
+@qasm2.extended
+def add_hadamard_qasm2(qindex: int,qreg: qasm2.QReg):
+    qasm2.h(qreg[qindex])
+    return qreg    
+      
+      
+@qasm2.extended
+def add_measure_qasm2(qindex: int,mindex: int,creg:qasm2.CReg,qreg:qasm2.QReg):
+    qasm2.measure(qreg[qindex],creg[mindex])
+    return qreg
+    
+    
+    
+'''
+
+
+'''    
+@qasm2.extended
+def single_stabilizer_program(qreg:qasm2.QReg,creg:qasm2.CReg,stabtype:str,targets: tuple[int, ...],ndataqubits:int,synindex:int)->qasm2.CReg:
+    
+    if stabtype=='X':
+        add_hadamard_qasm2(ndataqubits+synindex,qreg)
+        for i in range(len(targets)):     
+            add_cnot_qasm2(ndataqubits+synindex,targets[i],qreg)
+        add_hadamard_qasm2(ndataqubits+synindex,qreg)
+    else:
+        for i in range(len(targets)): 
+            add_cnot_qasm2(ndataqubits+synindex,targets[i],qreg)                 
+    '''
+    Measure the syndrome qubit
+    ''' 
+    add_measure_qasm2(ndataqubits+synindex,synindex,creg,qreg)
+    return creg     
+        
+        
+        
+        
+        
+        
+        
+def print_qasm2():
+    target = QASM2()
+    ast = target.emit(self.surface_code_program)
+    pprint(ast)
+    
     
 if __name__ == '__main__':
     suf=surfaceCode(3)
-    suf.inject_error({1:'X'})
+    #suf.inject_error({1:'X'})
     #suf.draw_surface()
     #suf.print_stab()
     #print(suf._Hmatrix)
     suf.compile_syndrome_circuit()
-    result=suf.run_simulation(1)
-    print(result)
+    suf.print_qasm2()
+    #result=suf.run_simulation(1)
+    #print(result)
