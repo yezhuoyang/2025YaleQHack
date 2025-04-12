@@ -1,2 +1,4 @@
 lark==1.2.2
 bloqade==0.22.5
+pyqrack
+bloqade.pyqrack
