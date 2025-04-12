@@ -1,4 +1,11 @@
 lark==1.2.2
 bloqade==0.22.5
+
+# this is problematic
 pyqrack
 bloqade.pyqrack
+
+# for visualization
+matplotlib
+pydantic<2.0 # pydantic 2.0 is not compatible with bloqade
+
