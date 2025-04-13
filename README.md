@@ -118,13 +118,13 @@ The corresponding instructions are listed in `./data/toy.json`. Based on the ins
 ![](./data/demo-toy.gif)
 
 Before running video generation, you need to install ffmpeg. This is required for the animation generation. You can install it using the following commands (for `Ubuntu`):
-```
+```bash
 sudo apt-get update
 sudo apt-get install ffmpeg
 ```
 
 For Mac, you can use Homebrew:
-```
+```bash
 brew install ffmpeg
 ```
 
@@ -134,6 +134,90 @@ Run `./examples/circuit-visualization/animation.py` to visualize the circuit. Yo
 python ./examples/circuit-visualization/animation.py --json_file ./examples/circuit-visualization/surface-code-1-aod.json --architecture_file ./examples/circuit-visualization/arch-1-aod.json --mpeg_file ./examples/circuit-visualization/surface-code-1-aod.mp4
 ```
 
+### 5. Compilation automation (optional)
+In previous steps, we have shown how to visualize the circuit and how to optimize the circuit. In this step, we will show how to automate the compilation process. The compilation process includes the following steps:
 
+**Download ZAC** from `https://github.com/UCLA-VAST/ZAC`. After downloading, please install the required packages.
 
+**Prepare the architecture spec**: you need to put your QASM circuit into the `./benchmark` folder in ZAC. For example, the architecture specification used for this project is:
+```json
+{
+    "name": "qhack",
+    "operation_duration": {
+        "rydberg": 0.36,
+        "1qGate": 52,
+        "atom_transfer": 15
+    },
+    "operation_fidelity": {
+        "two_qubit_gate": 0.995,
+        "single_qubit_gate": 0.9997,
+        "atom_transfer": 0.999
+    },
+    "qubit_spec":{
+        "T": 1.5e6
+    },
+    "storage_zones": [{
+        "zone_id": 0,
+        "slms": [{
+            "id": 0, 
+            "site_seperation": [4, 4], 
+            "r": 1, 
+            "c": 25, 
+            "location": [0, 0]}],
+        "offset": [0, 0],
+        "dimenstion": [300, 200]
+    }],
+    "entanglement_zones": [{
+        "zone_id": 0,
+        "slms": [
+            {
+                "id": 1,
+                "site_seperation": [20, 20],
+                "r": 1,
+                "c": 10,
+                "location": [0, 20]
+            },
+            {
+                "id": 2,
+                "site_seperation": [20, 20],
+                "r": 1,
+                "c": 10,
+                "location": [4, 20]
+            }
+        ],
+        "offset": [35, 307],
+        "dimension": [240, 70]
+    }],
+    "aods":[
+        {"id": 0, "site_seperation": 2, "r": 100, "c": 100}
+    ],
+    "arch_range": [[0, 0], [100, 20]],
+    "rydberg_range": [[[5, 95], [15, 25]]]
+}
+```
 
+**Prepare the experiment spec**: you need to put your architecture spec into the `./exp_setting` folder in ZAC. For example the specification used for this project is (e.g. in a file named `qhack.json`):
+```json
+{
+    "qasm_list": ["benchmark/surface-code.qasm"],
+    "zac_setting": [{
+        "arch_spec": "hardware_spec/arch-1-aod.json",
+        "dependency": true,
+        "dir": "result/zac/test/",
+        "routing_strategy": "maximalis_sort",
+        "trivial_placement": true,
+        "dynamic_placement": false,
+        "use_window": true,
+        "window_size": 1000,
+        "reuse": false,
+        "use_verifier": false
+    }],
+    "simulation": true,
+    "animation": false
+}
+```
+
+Finally, you can run the following command to generate the instructions:
+```bash
+python run.py exp_setting/qhack.json
+```
