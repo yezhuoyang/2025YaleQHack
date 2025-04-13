@@ -90,7 +90,7 @@ def count_qasm_gates_simple(qasm_str):
 
 
 
-def score(qasm_str):
+def get_cost(qasm_str):
     """
     Score a QASM string based on the number of local/global 1-qubit and 2-qubit gates.
     The score is calculated as follows:
@@ -112,12 +112,12 @@ def score(qasm_str):
              gate_counts['global_2q'] * 0.4)
     return score
 
-import argparse
-parser = argparse.ArgumentParser(description='Score a QASM string.')
-parser.add_argument('qasm_file', type=str, help='Path to the QASM file to be scored.')
-args = parser.parse_args()
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description='Score a QASM string.')
+    parser.add_argument('qasm_file', type=str, help='Path to the QASM file to be scored.')
+    args = parser.parse_args()
     qasm_str: str = open(args.qasm_file).read()
-    score_value = score(qasm_str)
+    score_value = get_cost(qasm_str)
     print(f"Score: {score_value:.2f}")
