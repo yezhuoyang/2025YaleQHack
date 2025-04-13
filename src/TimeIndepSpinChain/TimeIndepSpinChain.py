@@ -69,6 +69,47 @@ def SpinChainLieTrotter(n: int, time: int, steps: int, parallelize: bool = True)
 
     return SpinChainLieTrotter_program
 
+
+def SpinChainLieTrotterParallel(n: int, time: int, steps: int, parallelize: bool = True):
+    n_qubits = int(2**n)
+    
+    @extended_opt
+    def trotter_layer(qreg: qasm2.QReg, timestep: int, J: int, h: int): #puts commuting ZZ in parallel
+        for i in range(0,n_qubits, 2):
+            qasm2.cx(qreg[i], qreg[(i+1)%n_qubits])
+            qasm2.rz(qreg[(i+1)%n_qubits], 2*J*timestep)
+            qasm2.cx(qreg[i], qreg[(i+1)%n_qubits])
+        for i in range(1,n_qubits, 2):
+            qasm2.cx(qreg[i], qreg[(i+1)%n_qubits])
+            qasm2.rz(qreg[(i+1)%n_qubits], 2*J*timestep)
+            qasm2.cx(qreg[i], qreg[(i+1)%n_qubits])
+        for i in range(n_qubits):
+            qasm2.rx(qreg[i], 2*h*timestep)
+
+    @extended_opt(parallelize=parallelize)
+    def SpinChainLieTrotterParallel_program():
+        if time == 0: 
+            creg = qasm2.creg(n_qubits) 
+            return creg
+        
+        qreg = qasm2.qreg(n_qubits)
+        creg = qasm2.creg(n_qubits)
+
+        J = 0.2 
+        h = 1.2 
+        timestep = time/steps 
+        for i in range(steps): 
+            trotter_layer(qreg, timestep, J, h)
+        
+        for i in range(n_qubits):
+            qasm2.measure(qreg[i],creg[i])
+
+        return creg
+
+    return SpinChainLieTrotterParallel_program
+
+
+
 def SpinChainSuzukiTrotter(n: int, time: int, steps: int, parallelize: bool = True):
     n_qubits = int(2**n)
     
