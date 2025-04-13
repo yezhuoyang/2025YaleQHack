@@ -173,6 +173,7 @@ def SpinChainSuzukiTrotter(n: int, time: int, steps: int, parallelize: bool = Tr
     def trotter_layer(qreg: qasm2.QReg, timestep: int, J: int, h: int):
         for i in range(n_qubits):
             qasm2.rx(qreg[i], h*timestep)
+            qasm2.rx(qreg[i], h*timestep) # global pulse!
         for i in range(n_qubits):
             qasm2.cx(qreg[i], qreg[(i+1)%n_qubits])
             qasm2.rz(qreg[(i+1)%n_qubits], 2*J*timestep)
