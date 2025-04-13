@@ -25,6 +25,7 @@ python3 -m venv yalehack
 source yalehack/bin/activate
 pip install -r requirements.txt
 ```<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 ```
 =======
 ```
@@ -50,7 +51,6 @@ If you want to study and reproduce the time dependent Ising model part of the im
 [Runnable Jupyter Notebook 2.1](submission/ising_model.ipynb) 
 <!-- <img src="Figures\optimization_methods.jpeg" alt="Result of varying optimization methods of Ising model">  -->
 
-<!-- <img src="Figures\Adiabatic_evolution.png" alt="Result of varying optimization methods of Ising model">  -->
 
 #### 2.2 Schwinger Model
 [Runnable Jupyter Notebook 2.2](submit/variational.ipynb) 
