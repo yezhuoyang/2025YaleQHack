@@ -21,7 +21,14 @@ By the end of this set of projects, you should be able to:
 - Identify and troubleshooting in quantum programming frameworks
 
 ## Video demonstration
-Simulation | ZAC | QEC | QEC
+
+As an example, the video below demonstrate the compiled instructions for the 1D zoned architecture, where the gate zone seperation is 20 um and storage zone seperation zone is 4 um. 
+![](./data/demo-surface-code.gif)
+
+
+More detailed video demonstration can be found in the following links.
+
+Simulation | Toy | QEC | QEC
 :-: | :-: | :-: | :-:
 [Video1](data/simulation.mp4)| [Video2](data/zac_code_out.mp4) | [Video3](examples/circuit-visualization/surface-code-1-aod.mp4) | [Video4](examples/circuit-visualization/surface-code-4-aod.mp4)
 
