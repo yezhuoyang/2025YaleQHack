@@ -12,7 +12,7 @@ In this challenge, we explore two different area to demonstrate the power of new
 ## Video demonstration
 caption1 | caption2
 :-: | :-:
-![](data/simulation.mp4)| <video src='data/zac_code_out.mp4' width=180/>
+<video src="data/simulation.mp4"></video>| <video src='data/zac_code_out.mp4' width=180/>
 
 
 ## Writeup
