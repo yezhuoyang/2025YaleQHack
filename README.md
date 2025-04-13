@@ -58,7 +58,21 @@ If you want to study and reproduce the time dependent ising model part of implem
 
 ## Getting started
 
+<<<<<<< HEAD
 ### 1. Demonstration of famous algorithms
+=======
+### 1. Demonstration of Quantum Error Correction
+[Runnable Jupyter Notebook 1](submission/qec_submission.ipynb) 
+
+### 2. Demonstration of Quantum Simulation: Trotterized Time Evolution and Variational Approach
+
+#### 2.1 Ising Model
+[Runnable Jupyter Notebook 2.1](submission/time_independent_ising_model.ipynb) 
+
+#### 2.2 Schwinger Model
+[Runnable Jupyter Notebook 2.2](submit/variational.ipynb) 
+<img src="Figures/variational.png" alt="Result Of Variational Approach" width="300"> 
+>>>>>>> 805a52e7d5f138f650b505e20246b5205b5259a1
 
 
 ### 2. Circuit optimization
