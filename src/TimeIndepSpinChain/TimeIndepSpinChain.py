@@ -249,9 +249,3 @@ def SpinChainSuzukiTrotter(n: int, time: int, steps: int, parallelize: bool = Tr
         return creg
 
     return SpinChainSuzukiTrotter_program
-
-from rich.console import Console
-target = qasm2.emit.QASM2(allow_parallel=False, allow_global=False) 
-ast = target.emit(SpinChainLieTrotter(2,12,24, parallelize=False)) 
-qasm_str: str = qasm2.parse.spprint(ast, console=Console(no_color=True))
-open("output.txt","w").write(qasm_str) # not fully functional
