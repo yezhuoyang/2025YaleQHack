@@ -33,7 +33,6 @@ source yalehack/bin/activate
 pip install -r requirements.txt
 ```
 
-<<<<<<< HEAD
 
 
 
@@ -42,7 +41,6 @@ pip install -r requirements.txt
 
 
 
-=======
 ## Getting started
 
 ### 1. Demonstration of famous algorithms
@@ -71,4 +69,11 @@ Run `./examples/circuit-visualization/animation.py` to visualize the circuit. Yo
 ```bash
 python ./examples/circuit-visualization/animation.py --json_file ./examples/circuit-visualization/surface-code-1-aod.json --architecture_file ./examples/circuit-visualization/arch-1-aod.json --mpeg_file ./examples/circuit-visualization/surface-code-1-aod.mp4
 ```
->>>>>>> 13b2482aba135bbeed6749a1b4cff527ee1941ae
+
+
+
+
+
+caption1 | caption2
+:-: | :-:
+<video src='data/simulation.mp4' width=180/> | <video src='data/zac_code_out.mp4' width=180/>
