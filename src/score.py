@@ -106,10 +106,10 @@ def score(qasm_str):
         int: The total score based on the gate counts.
     """
     gate_counts = count_qasm_gates_simple(qasm_str)
-    score = (gate_counts['local_1q'] * 1 +
-             gate_counts['local_2q'] * 2 +
-             gate_counts['global_1q'] * 3 +
-             gate_counts['global_2q'] * 4)
+    score = (gate_counts['local_1q'] * 0.2 +
+             gate_counts['local_2q'] * 0.4 +
+             gate_counts['global_1q'] * 0.1 +
+             gate_counts['global_2q'] * 0.4)
     return score
 
 
