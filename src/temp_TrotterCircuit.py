@@ -390,7 +390,7 @@ class SuzukiTrotter:
         return circuit_gen
     
     def optimized_trotter(self, time: float, n_steps: int = 1, order: int = 1, 
-                         parallelize: bool = True) -> Callable:
+                        parallelize: bool = True) -> Callable:
         """
         Generate an optimized Trotter circuit that uses commutation relationships
         to reduce the circuit depth and improve accuracy.
@@ -469,7 +469,7 @@ class SuzukiTrotter:
         return circuit_gen
     
     def trotterize(self, time: float, n_steps: int = 1, order: int = 1, 
-                  optimize: bool = True, parallelize: bool = True) -> Callable:
+                    optimize: bool = True, parallelize: bool = True) -> Callable:
         """
         Main method to generate a trotterized circuit for the given Hamiltonian.
         

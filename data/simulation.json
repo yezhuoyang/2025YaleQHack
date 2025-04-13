@@ -1,0 +1,281 @@
+{
+    "flair_visual_version": "0.0.1",
+    "counts": {},
+    "logs": ",a,b\n0,1,4\n1,2,5\n2,3,6\n",
+    "atom_animation_state": {
+        "block_durations": [
+            15.0
+        ],
+        "gate_events": [
+            [
+                3.0,
+                {
+                    "cls_name": "GlobalCZGate",
+                    "kwargs": {
+                        "Test": 1
+                    },
+                    "duration": 10.0
+                }
+            ]
+        ],
+        "qpu_fov": {
+            "xmin": 0,
+            "xmax": 10,
+            "ymin": 0,
+            "ymax": 10
+        },
+        "atoms": [
+            {
+                "id": 1,
+                "x": {
+                    "c": {
+                        "dtype": "<f8",
+                        "shape": [
+                            4,
+                            4
+                        ],
+                        "buffer": "eJwBgAB//1ptMw+8Gt8/WAyP8p7W1D+G0yZ4DXfsPzg7TCaBDbU//Hqnu7DGzT84sbnPz8u2PyCwKz60bsU/55vwPgwo6z9fZ0QUrg3uP1ysBq5FbcY/QHxxuOlLmj8tG6JVg2DlPxs5kNas6OE/LKt9iclGxT/cyTsb6SXfP8uRObKBMOA/R609iw=="
+                    },
+                    "x": {
+                        "dtype": "<i8",
+                        "shape": [
+                            5
+                        ],
+                        "buffer": "eJxjYIAARijNBKWZoTQLlAYAAMgACw=="
+                    },
+                    "extrapolate": false
+                },
+                "y": {
+                    "c": {
+                        "dtype": "<f8",
+                        "shape": [
+                            4,
+                            4
+                        ],
+                        "buffer": "eJwBgAB//xEJ7isA2+o/hTM935v/4D/aQV8TdDriPzjsmCZhg7Y/iJBHkYECtj+kdlBbHWrrP5AkT7S9S8M/kI8nnOdcoD8wOKuDKYezP0aFnaryZ9s/qYE7o7m/6z9u5TB6/QnsP7YgKPfdBtI/npB1eHwz7D+WTNq2CWnVP4WwZBn9ZOI/NHs+Hg=="
+                    },
+                    "x": {
+                        "dtype": "<i8",
+                        "shape": [
+                            5
+                        ],
+                        "buffer": "eJxjYIAARijNBKWZoTQLlAYAAMgACw=="
+                    },
+                    "extrapolate": false
+                },
+                "events": [
+                    [
+                        0.0,
+                        "Test"
+                    ]
+                ]
+            }
+        ],
+        "slm_zone": [
+            [
+                0.0,
+                0.0
+            ]
+        ],
+        "aod_moves": [
+            {
+                "time": 1.0,
+                "duration": 1.0,
+                "x": {
+                    "c": {
+                        "dtype": "<f8",
+                        "shape": [
+                            4,
+                            4
+                        ],
+                        "buffer": "eJwBgAB//1ptMw+8Gt8/WAyP8p7W1D+G0yZ4DXfsPzg7TCaBDbU//Hqnu7DGzT84sbnPz8u2PyCwKz60bsU/55vwPgwo6z9fZ0QUrg3uP1ysBq5FbcY/QHxxuOlLmj8tG6JVg2DlPxs5kNas6OE/LKt9iclGxT/cyTsb6SXfP8uRObKBMOA/R609iw=="
+                    },
+                    "x": {
+                        "dtype": "<i8",
+                        "shape": [
+                            5
+                        ],
+                        "buffer": "eJxjYIAARijNBKWZoTQLlAYAAMgACw=="
+                    },
+                    "extrapolate": false
+                },
+                "y": {
+                    "c": {
+                        "dtype": "<f8",
+                        "shape": [
+                            4,
+                            4
+                        ],
+                        "buffer": "eJwBgAB//xEJ7isA2+o/hTM935v/4D/aQV8TdDriPzjsmCZhg7Y/iJBHkYECtj+kdlBbHWrrP5AkT7S9S8M/kI8nnOdcoD8wOKuDKYezP0aFnaryZ9s/qYE7o7m/6z9u5TB6/QnsP7YgKPfdBtI/npB1eHwz7D+WTNq2CWnVP4WwZBn9ZOI/NHs+Hg=="
+                    },
+                    "x": {
+                        "dtype": "<i8",
+                        "shape": [
+                            5
+                        ],
+                        "buffer": "eJxjYIAARijNBKWZoTQLlAYAAMgACw=="
+                    },
+                    "extrapolate": false
+                }
+            }
+        ]
+    },
+    "noise_model": {
+        "all_qubits": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+        ],
+        "gate_events": [
+            {
+                "error": {
+                    "error_type": "SingleQubitError",
+                    "survival_prob": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "operator_error": {
+                        "error_model_type": "PauliNoise",
+                        "errors": []
+                    }
+                },
+                "operation": {
+                    "op_type": "LocalW",
+                    "participants": [
+                        0
+                    ],
+                    "theta": 0.25,
+                    "phi": 0.0
+                }
+            },
+            {
+                "error": {
+                    "error_type": "CZError",
+                    "survival_prob": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "storage_error": {
+                        "error_model_type": "PauliNoise",
+                        "errors": []
+                    },
+                    "entangled_error": {
+                        "error_model_type": "PauliNoise",
+                        "errors": []
+                    },
+                    "single_error": {
+                        "error_model_type": "PauliNoise",
+                        "errors": []
+                    }
+                },
+                "operation": {
+                    "op_type": "CZ",
+                    "participants": [
+                        [
+                            0,
+                            1
+                        ]
+                    ]
+                }
+            },
+            {
+                "error": {
+                    "error_type": "CZError",
+                    "survival_prob": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "storage_error": {
+                        "error_model_type": "PauliNoise",
+                        "errors": []
+                    },
+                    "entangled_error": {
+                        "error_model_type": "PauliNoise",
+                        "errors": []
+                    },
+                    "single_error": {
+                        "error_model_type": "PauliNoise",
+                        "errors": []
+                    }
+                },
+                "operation": {
+                    "op_type": "CZ",
+                    "participants": [
+                        [
+                            0,
+                            2
+                        ]
+                    ]
+                }
+            },
+            {
+                "error": {
+                    "error_type": "SingleQubitError",
+                    "survival_prob": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "operator_error": {
+                        "error_model_type": "PauliNoise",
+                        "errors": []
+                    }
+                },
+                "operation": {
+                    "op_type": "Measurement",
+                    "measure_tag": "m",
+                    "participants": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9
+                    ]
+                }
+            }
+        ]
+    }
+}
