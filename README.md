@@ -71,6 +71,16 @@ If you want to study and reproduce the time dependent ising model part of implem
 
 ### 2. Circuit optimization
 
+To run the circuit optimization, you need to specify the qasm file and the optimization method. The qasm file should be in the `./examples/circuit-optimization/qasm/` directory. The optimization method can be one of the following:
+- `zx-qiskit`: This method uses ZX calculus to optimize the circuit.
+- `qiskit-bloqade-parallel`: This method uses ZX calculus to optimize the circuit and then uses UOpToParallel to optimize the circuit.
+- `zx-qiskit-bloqade-parallel`: This method uses UOpToParallel to optimize the circuit.
+
+An example of running the optimization is as follows:
+```bash
+python ./examples/circuit-optimization/run_optimization.py --qasm_file ./examples/circuit-optimization/qasm/opt-qiskit.qasm --method zx-bloqade-parallel
+```
+
 
 ### 3. Circuit visualization
 
