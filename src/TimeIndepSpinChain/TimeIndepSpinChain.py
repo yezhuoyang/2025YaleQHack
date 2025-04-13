@@ -35,7 +35,7 @@ def extended_opt(self):
 
     return run_pass
 
-def phase_transition(n: int, time: int, steps: int, parallelize: bool = True):
+def SpinChainLieTrotter(n: int, time: int, steps: int, parallelize: bool = True):
     n_qubits = int(2**n)
     
     @extended_opt
@@ -48,7 +48,7 @@ def phase_transition(n: int, time: int, steps: int, parallelize: bool = True):
             qasm2.rx(qreg[i], 2*h*timestep)
 
     @extended_opt(parallelize=parallelize)
-    def phase_transition_program():
+    def SpinChainLieTrotter_program():
         if time == 0: 
             creg = qasm2.creg(n_qubits) 
             return creg
@@ -67,37 +67,41 @@ def phase_transition(n: int, time: int, steps: int, parallelize: bool = True):
 
         return creg
 
-    return phase_transition_program
+    return SpinChainLieTrotter_program
 
-time_interval = 0.5
-steps = 24
-N = 2
-mag_vals = [] 
+def SpinChainSuzukiTrotter(n: int, time: int, steps: int, parallelize: bool = True):
+    n_qubits = int(2**n)
+    
+    @extended_opt
+    def trotter_layer(qreg: qasm2.QReg, timestep: int, J: int, h: int):
+        for i in range(n_qubits):
+            qasm2.rx(qreg[i], h*timestep)
+        for i in range(n_qubits):
+            qasm2.cx(qreg[i], qreg[(i+1)%n_qubits])
+            qasm2.rz(qreg[(i+1)%n_qubits], 2*J*timestep)
+            qasm2.cx(qreg[i], qreg[(i+1)%n_qubits])
+        for i in range(n_qubits):
+            qasm2.rx(qreg[i], h*timestep)
 
-for i in range(steps):
-    kernel_PT = phase_transition(N, time_interval*i, i)
-    
-    device = PyQrack(dynamic_qubits=True, pyqrack_options={"isBinaryDecisionTree": False})
-    results = device.multi_run(kernel_PT, _shots=100)
-    
-    def to_bitstrings(results):
-        return Counter(map(lambda result:"".join(map(str, result)), results))
-    
-    counts = to_bitstrings(results)
-    
-    total_magnetization = 0
-    
-    for key, value in counts.items():
-        spin_down = str(key).count('1')
-        #print("Time " + str(time_interval*i) + ": " + str(key) + " " + str(value))
-        total_magnetization += value*spin_down * (-1/2) + value*(2**N - spin_down) * (1/2)
 
-    print("Time " + str(time_interval*i) + ": " + str(total_magnetization/100))
-    mag_vals.append(total_magnetization/100) 
+    @extended_opt(parallelize=parallelize)
+    def SpinChainSuzukiTrotter_program():
+        if time == 0: 
+            creg = qasm2.creg(n_qubits) 
+            return creg
+        
+        qreg = qasm2.qreg(n_qubits)
+        creg = qasm2.creg(n_qubits)
 
-import matplotlib.pyplot as plt 
-import numpy as np
+        J = 0.2 
+        h = 1.2 
+        timestep = time/steps 
+        for i in range(steps): 
+            trotter_layer(qreg, timestep, J, h)
+        
+        for i in range(n_qubits):
+            qasm2.measure(qreg[i],creg[i])
 
-t = np.linspace(0, 11.5, 24)
-magnetization = np.array(mag_vals)
-plt.plot(t, magnetization)
+        return creg
+
+    return SpinChainSuzukiTrotter_program
