@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 import bisect
 from architecture import Architecture
-
+from tqdm import tqdm
 class Animator():
 
     # constants for animation
@@ -21,7 +21,8 @@ class Animator():
     QUBIT_COLOR = 'k'
     AOD_COLORS = ['r', 'c', 'm', 'y'] # max 4 aods so far
     AOD_TRANS = 0.7
-    
+
+
     def __init__(self, arch_dict: dict):
         self.architecture = Architecture(arch_dict)
 
@@ -52,6 +53,10 @@ class Animator():
         self.inst_str = ''
 
         num_frame = self.create_schedule()
+        total_frames = self.piecewise_schedule[-1][0] + self.INIT_FRM
+        # Set up a tqdm progress bar
+        self.progress_bar = tqdm(total=total_frames, desc="Creating Animation", unit="frame")
+        
         anim = FuncAnimation(
             self.fig,
             self.update,
@@ -59,6 +64,8 @@ class Animator():
             frames=self.INIT_FRM + num_frame,
         )
         anim.save(output, writer=FFMpegWriter(self.FPS))
+        
+        self.progress_bar.close()
 
     def create_schedule(self):
         """
@@ -245,6 +252,8 @@ class Animator():
         return 
 
     def update(self, f: int):  # f is the frame
+        self.progress_bar.update(1)
+        
         true_frame = f - self.INIT_FRM # consider the initial frozen frames
 
         # get which piecewise schedule f is in
@@ -400,22 +409,30 @@ class Animator():
 
 import argparse
 import json
+import os
+
+CURR_DIR = os.path.dirname(os.path.abspath(__file__))
 
 parser = argparse.ArgumentParser(description="Animate QPU simulation.")
 parser.add_argument(
-    "json_file",
+    "--json_file",
     type=str,
-    nargs="?",
-    default="./data/surface-code-1-aod.json",
+    default=f"{CURR_DIR}/surface-code-1-aod.json",
     help="Path to the JSON file containing job data.",
 )
 parser.add_argument(
-    "architecture_file",
+    "--architecture_file",
     type=str,
-    nargs="?",
-    default="./data/yale-1-aod.json",
+    default=f"{CURR_DIR}/arch-1-aod.json",
     help="Path to the JSON file containing architecture data.",
 )
+parser.add_argument(
+    "--mpeg_file",
+    type=str,
+    default=f"{CURR_DIR}/surface-code-1-aod.mp4",
+    help="Path to the output MPEG file.",
+)
+
 args = parser.parse_args()
 
 if __name__ == "__main__":
@@ -423,7 +440,7 @@ if __name__ == "__main__":
     arch_dict: dict = json.loads(open(args.architecture_file).read())
     Animator(arch_dict).animate(
         code,
-        "./data/surface-code-1-aod.mp4",
+        args.mpeg_file,
         scaling_factor=8,
         font=10,
         ffmpeg='ffmpeg'
