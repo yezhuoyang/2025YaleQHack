@@ -67,8 +67,9 @@ If you want to study and reproduce the time dependent ising model part of implem
 
 ## Getting started
 
-### 1. Demonstration of Quantum Error Correction
+### 1. Implementation Quantum Error Correction with new language feature
 [Runnable Jupyter Notebook 1](submission/qec_submission.ipynb) 
+We implement surface code, and show a small logical algorithm. Novel syntax features such as if/while and recursion are used in construction of the quantum algorithm.  
 
 ### 2. Demonstration of Quantum Simulation: Trotterized Time Evolution and Variational Approach
 
