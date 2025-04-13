@@ -1,6 +1,6 @@
 import re
 
-def convert_qasm_to_python(qasm_code: str) -> str:
+def convert_qasm_to_python(qasm_code: str, output_qasm_file: str) -> str:
     """
     Converts a subset of OpenQASM 2.0 code to a Python dialect.
     
@@ -11,6 +11,11 @@ def convert_qasm_to_python(qasm_code: str) -> str:
     """
     # Start with the header for the Python dialect code.
     output_lines = [
+        "from bloqade import qasm2", 
+        "from bloqade.qasm2.parse import ast", 
+        "from bloqade.qasm2.passes import UOpToParallel, QASM2Fold", 
+        "", 
+        "from numpy import pi", 
         "@qasm2.extended",
         "def main():"
     ]
@@ -56,23 +61,35 @@ def convert_qasm_to_python(qasm_code: str) -> str:
             continue
 
         # If the line does not match any of the above patterns, skip it.
+    
+    output_lines.extend([
+        "UOpToParallel(dialects=main.dialects)(main)",
+        "",
+        "# emit",
+        "from rich.console import Console",
+        "target = qasm2.emit.QASM2(",
+        "    allow_parallel=True,",
+        "    allow_global=True,",
+        ")",
+        "ast = target.emit(main)",
+        "qasm_str: str = qasm2.parse.spprint(ast, console=Console(no_color=True))",
+        f"open('{output_qasm_file}', 'w').write(qasm_str)"
+    ])
     return "\n".join(output_lines)
 
+import os
+CURR_DIR = os.path.dirname(os.path.abspath(__file__))
 
-if __name__ == '__main__':
-    # Example QASM input string (this would typically come from a file or other source)
-    # qasm_input = """
-    # OPENQASM 2.0;
-    # include "qelib1.inc";
-    # qreg q[4];
-    # cx q[0],q[1];
-    # cx q[1],q[0];
-    # cx q[0],q[1];
-    # u3(pi/2,0,pi) q[0];
-    # u3(pi/2,0,-pi) q[1];
-    # u3(pi/2,0,pi) q[2];
-    # """
-    qasm_input: str = open("opt-qiskit.qasm").read()
+def run_bloqade_parallelize(qasm_str: str):
+    tmp_python_file = f"{CURR_DIR}/tmp_convert_qasm.py"
+    tmp_qasm_file = f"{CURR_DIR}/tmp_convert_qasm.qasm"
     
-    python_code = convert_qasm_to_python(qasm_input)
-    open("opt-qiskit.py", "w").write(python_code)
+    python_code = convert_qasm_to_python(qasm_str, tmp_qasm_file)
+    open(tmp_python_file, "w").write(python_code)
+
+    os.system(f"python {tmp_python_file}")
+    output_qasm_str = open(tmp_qasm_file).read()
+    
+    os.remove(tmp_python_file)
+    os.remove(tmp_qasm_file)
+    return output_qasm_str
