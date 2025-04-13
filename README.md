@@ -9,13 +9,18 @@ John Ye, Hanyu Wang, Harry Wang, Luca Niu, Victor Yu
 
 In this challenge, we explore two different area to demonstrate the power of new language feature, as well as software-hardware codesign. First, we implement error correction code such as repetition code and surface code. With the help of modularized design and function reusing, we show that we can also implement simple logical algorithm with surface code. We also use recursion to implement fault-tolerant syndrome measurement. Second, we implement a second-order Trotterized time evolution simulation of the transverse-field Ising model (TFIM)—a paradigmatic strongly correlated system exhibiting two distinct phases determined by the competition between spin-spin interactions and external transverse fields.By adiabatically tuning the Hamiltonian parameters, our simulations successfully detect the crossing of the critical point separating these phases. Furthermore, we optimize the quantum circuit to minimize the number of required pulses, demonstrating an efficient quantum simulation protocol for the TFIM. We have also put a lot of effort in figuring out the compilation automation pipeline, such that all of our algorithm can be compiled down to atom movements, we also use video to demonstrate our compilation. In the contest, we find some potential bugs in the provided packages. 
 
+A More in depth description of our submission can be found in this [report](submission/YQuantum_QuBruin_Write_Up.pdf).
 
+<<<<<<< HEAD
 This is a video showing what we have achieved:
 
 
 caption1 | caption2
 :-: | :-:
 <video src='data/simulation.mp4' width=180/> | <video src='data/zac_code_out.mp4' width=180/>
+=======
+The slides of our presentation can be found [here](submission/slides.pdf).
+>>>>>>> f1cf1f02141eaa7f6aa46fb9d11f2a194846e52e
 
 ## Environment setup
 
