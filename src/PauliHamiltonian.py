@@ -369,92 +369,6 @@ class PauliHamiltonian:
             
         return groups
 
-
-class BloqadeConverter:
-    """Class for converting between Pauli Hamiltonians and Bloqade Hamiltonians."""
-    
-    @staticmethod
-    def pauli_x_to_bloqade(term: PauliTerm, n_qubits: int) -> dict:
-        """Convert a Pauli X term to a Bloqade representation."""
-        # In Bloqade, Pauli X is related to the Rabi drive (Ω)
-        result = {
-            "type": "rabi_drive",
-            "coefficient": term.coefficient,
-            "qubits": term.get_qubits() if term.operators else list(range(n_qubits))
-        }
-        return result
-    
-    @staticmethod
-    def pauli_z_to_bloqade(term: PauliTerm, n_qubits: int) -> dict:
-        """Convert a Pauli Z term to a Bloqade representation."""
-        # In Bloqade, Pauli Z is related to the detuning (Δ)
-        result = {
-            "type": "detuning",
-            "coefficient": term.coefficient,
-            "qubits": term.get_qubits() if term.operators else list(range(n_qubits))
-        }
-        return result
-    
-    @staticmethod
-    def pauli_zz_to_bloqade(term: PauliTerm) -> dict:
-        """Convert a Pauli ZZ interaction term to a Bloqade representation."""
-        # In Bloqade, ZZ interactions are related to the Rydberg interaction
-        qubits = term.get_qubits()
-        if len(qubits) != 2:
-            raise ValueError("ZZ term must operate on exactly 2 qubits")
-            
-        result = {
-            "type": "rydberg_interaction",
-            "coefficient": term.coefficient,
-            "qubit1": qubits[0],
-            "qubit2": qubits[1]
-        }
-        return result
-    
-    @staticmethod
-    def convert_to_bloqade(hamiltonian: PauliHamiltonian) -> List[dict]:
-        """
-        Convert a Pauli Hamiltonian to a Bloqade representation.
-        
-        Args:
-            hamiltonian: The Pauli Hamiltonian to convert
-            
-        Returns:
-            List of dictionaries representing Bloqade Hamiltonian terms
-        """
-        bloqade_terms = []
-        n_qubits = hamiltonian.get_n_qubits()
-        
-        for term in hamiltonian.terms:
-            # Extract operator types in this term
-            op_types = set(op for op in term.operators.values())
-            
-            # Single Pauli operator types
-            if len(op_types) == 1:
-                op_type = next(iter(op_types)) if op_types else PauliOp.I
-                
-                if op_type == PauliOp.X:
-                    bloqade_terms.append(
-                        BloqadeConverter.pauli_x_to_bloqade(term, n_qubits)
-                    )
-                elif op_type == PauliOp.Z:
-                    bloqade_terms.append(
-                        BloqadeConverter.pauli_z_to_bloqade(term, n_qubits)
-                    )
-            
-            # Check for ZZ interaction
-            elif len(op_types) == 1 and len(term.operators) == 2 and PauliOp.Z in op_types:
-                bloqade_terms.append(
-                    BloqadeConverter.pauli_zz_to_bloqade(term)
-                )
-            
-            # Other terms would require custom implementation
-            else:
-                print(f"Warning: Term {term} cannot be directly mapped to Bloqade.")
-                
-        return bloqade_terms
-
-
 # Helper functions to create common Hamiltonians
 def create_transverse_field_ising_model(n_qubits: int, 
                                        j_coupling: float = 1.0, 
@@ -566,10 +480,3 @@ if __name__ == "__main__":
     print("\nCommuting groups:")
     for i, group in enumerate(commuting):
         print(f"Group {i+1}: {group}")
-    
-    # Convert to Bloqade representation
-    bloqade_terms = BloqadeConverter.convert_to_bloqade(tfim)
-    
-    print("\nBloqade representation:")
-    for term in bloqade_terms:
-        print(term)
