@@ -46,14 +46,15 @@ pip install -r requirements.txt
 ## Getting started
 
 ### 1. Demonstration of Quantum Error Correction
+[Runnable Jupyter Notebook 1](submission/qec_submission.ipynb) 
 
 ### 2. Demonstration of Quantum Simulation: Trotterized Time Evolution and Variational Approach
 
 #### 2.1 Time Independent Ising Model
 [Runnable Jupyter Notebook 2.1](submission/time_independent_ising_model.ipynb) 
 
-#### 2.3 Variational Approach with Schwinger Model
-[Runnable Jupyter Notebook 2.4](submit/variational.ipynb) 
+#### 2.2 Variational Approach with Schwinger Model
+[Runnable Jupyter Notebook 2.2](submit/variational.ipynb) 
 <img src="Figures/variational.png" alt="Result Of Variational Approach" width="300"> 
 
 
