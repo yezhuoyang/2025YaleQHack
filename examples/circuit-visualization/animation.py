@@ -406,14 +406,14 @@ parser.add_argument(
     "json_file",
     type=str,
     nargs="?",
-    default="./data/zac_code.json",
+    default="./data/surface-code-1-aod.json",
     help="Path to the JSON file containing job data.",
 )
 parser.add_argument(
     "architecture_file",
     type=str,
     nargs="?",
-    default="./data/yale.json",
+    default="./data/yale-1-aod.json",
     help="Path to the JSON file containing architecture data.",
 )
 args = parser.parse_args()
@@ -423,7 +423,7 @@ if __name__ == "__main__":
     arch_dict: dict = json.loads(open(args.architecture_file).read())
     Animator(arch_dict).animate(
         code,
-        "./data/zac_code_out.mp4",
+        "./data/surface-code-1-aod.mp4",
         scaling_factor=8,
         font=10,
         ffmpeg='ffmpeg'

@@ -15,16 +15,18 @@ def main():
 
     q = qasm2.qreg(4)
 
-    theta = 0.1
-    phi = 0.2
-    lam = 0.3
+    # theta = 0.1
+    # phi = 0.2
+    # lam = 0.3
 
-    qasm2.u(q[1], theta, phi, lam)
-    qasm2.u(q[3], theta, phi, lam)
-    qasm2.cx(q[1], q[3])
-    qasm2.u(q[2], theta, phi, lam)
-    qasm2.u(q[0], theta, phi, lam)
-    qasm2.cx(q[0], q[2])
+    # qasm2.u(q[1], theta, phi, lam)
+    # qasm2.u(q[3], theta, phi, lam)
+    # qasm2.cx(q[1], q[3])
+    # qasm2.u(q[2], theta, phi, lam)
+    # qasm2.u(q[0], theta, phi, lam)
+    # qasm2.cx(q[0], q[2])
+    qasm2.cx(q[0], q[1])
+    qasm2.cx(q[0], q[1])
 
 
 UOpToParallel(dialects=main.dialects)(main)
