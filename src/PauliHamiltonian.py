@@ -172,8 +172,11 @@ class PauliHamiltonian:
     def __repr__(self):
         return self.__str__()
     
-    def to_sparse_matrix(self, n_qubits: int) -> sparse.csr_matrix:
+    def to_sparse_matrix(self, n_qubits: int = None) -> sparse.csr_matrix:
         """Convert the Hamiltonian to a sparse matrix representation."""
+        if n_qubits is None:
+            n_qubits = self.get_n_qubits()
+
         if not self.terms:
             dim = 2**n_qubits
             return sparse.csr_matrix((dim, dim), dtype=complex)
@@ -184,6 +187,17 @@ class PauliHamiltonian:
             result += term.to_sparse_matrix(n_qubits)
             
         return result
+    
+    def to_matrix(self, n_qubits: int = None) -> sparse.csr_matrix:
+        """Convert the Hamiltonian to a sparse matrix representation."""
+        if n_qubits is None:
+            n_qubits = self.get_n_qubits()
+            
+        # Convert the Hamiltonian to a sparse matrix first
+        sparse_matrix = self.to_sparse_matrix(n_qubits)
+    
+        # Convert to dense matrix
+        return sparse_matrix.toarray()
     
     def get_all_qubits(self) -> List[int]:
         """Get a sorted list of all qubits this Hamiltonian operates on."""
@@ -242,6 +256,76 @@ class PauliHamiltonian:
                 grouped['mixed'].add_term(term)
                 
         return grouped
+    
+    # Add this method to the PauliHamiltonian class in PauliHamiltonian.py
+
+    def simplify(self):
+        """
+        Simplify the Hamiltonian by combining like terms and removing negligible terms.
+        
+        Returns:
+            A new simplified PauliHamiltonian object
+        """
+        # Create a dictionary to group terms by their operators
+        grouped_terms = {}
+        
+        for term in self.terms:
+            # Create a unique key for each term based on its operators
+            key_parts = []
+            
+            # Sort by qubit index for consistent ordering
+            for qubit in sorted(term.operators.keys()):
+                op = term.operators[qubit]
+                key_parts.append(f"{op.name}_{qubit}")
+            
+            # Create the key - empty string means identity operator
+            key = " ".join(key_parts) if key_parts else "I"
+            
+            # Add coefficient to the appropriate group
+            if key in grouped_terms:
+                grouped_terms[key] += term.coefficient
+            else:
+                grouped_terms[key] = term.coefficient
+        
+        # Create new PauliHamiltonian with simplified terms
+        simplified = PauliHamiltonian()
+        
+        for key, coefficient in grouped_terms.items():
+            # Skip terms with near-zero coefficients
+            if abs(coefficient) < 1e-10:
+                continue
+            
+            # Parse the key to reconstruct operators dictionary
+            operators = {}
+            
+            # Handle the identity case
+            if key == "I":
+                term = PauliTerm(coefficient, {})
+            else:
+                # Split the key into operator_qubit pairs
+                parts = key.split()
+                for part in parts:
+                    op_name, qubit_str = part.split('_')
+                    qubit = int(qubit_str)
+                    
+                    # Map the name back to a PauliOp
+                    if op_name == "X":
+                        op = PauliOp.X
+                    elif op_name == "Y":
+                        op = PauliOp.Y
+                    elif op_name == "Z":
+                        op = PauliOp.Z
+                    else:  # Identity
+                        op = PauliOp.I
+                    
+                    operators[qubit] = op
+                
+                term = PauliTerm(coefficient, operators)
+            
+            # Add the simplified term to the new Hamiltonian
+            simplified.add_term(term)
+        
+        return simplified
     
     def commuting_groups(self) -> List['PauliHamiltonian']:
         """
