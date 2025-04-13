@@ -166,6 +166,52 @@ def SpinChainLieTrotterParallel(n: int, time: int, steps: int, parallelize: bool
 
 
 
+def SpinChainLieTrotterTD(n: int, time: float, steps: int, 
+                         h_start: float, h_end: float,
+                         J_start: float, J_end: float,
+                         parallelize: bool = True):
+    n_qubits = int(2**n)
+    
+    @extended_opt
+    def trotter_layer(qreg: qasm2.QReg, timestep: float, J: float, h: float):
+        # Interaction terms (ZZ)
+        for i in range(n_qubits):
+            qasm2.cx(qreg[i], qreg[(i+1)%n_qubits])
+            qasm2.rz(qreg[(i+1)%n_qubits], 2*J*timestep)
+            qasm2.cx(qreg[i], qreg[(i+1)%n_qubits])
+        # Field terms (X)
+        for i in range(n_qubits):
+            qasm2.rx(qreg[i], 2*h*timestep)
+
+    @extended_opt(parallelize=parallelize)
+    def SpinChainLieTrotterTD_program():
+        if time == 0: 
+            creg = qasm2.creg(n_qubits) 
+            return creg
+        
+        qreg = qasm2.qreg(n_qubits)
+        creg = qasm2.creg(n_qubits)
+
+        timestep = time / steps
+        for step in range(steps):
+            # Linear interpolation of parameters
+            t_frac = step / steps
+            J = J_start + (J_end - J_start) * t_frac
+            h = h_start + (h_end - h_start) * t_frac
+            
+            trotter_layer(qreg, timestep, J, h)
+        
+        # Measurement
+        for i in range(n_qubits):
+            qasm2.measure(qreg[i], creg[i])
+
+        return creg
+
+    return SpinChainLieTrotterTD_program
+
+
+
+
 def SpinChainSuzukiTrotter(n: int, time: int, steps: int, parallelize: bool = True):
     n_qubits = int(2**n)
     
