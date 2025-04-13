@@ -78,7 +78,7 @@ We implement surface code, and show a small logical algorithm. Novel syntax feat
 
 #### 2.2 Schwinger Model
 [Runnable Jupyter Notebook 2.2](submit/variational.ipynb) 
-<!-- <img src="Figures/variational.png" alt="Result Of Variational Approach">  -->
+<img src="Figures/variational.png" alt="Result Of Variational Approach"> 
 
 
 ### 3. Circuit optimization
