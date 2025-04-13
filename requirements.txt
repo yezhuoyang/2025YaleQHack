@@ -14,3 +14,5 @@ ply
 
 qiskit==1.1.1
 qiskit-aer==0.15.1
+
+pylatexenc
