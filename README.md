@@ -21,7 +21,7 @@ By the end of this set of projects, you should be able to:
 - Identify and troubleshooting in quantum programming frameworks
 
 ## Video demonstration
-Simple Sim | ZAC | QEC | QEC
+Simulation | ZAC | QEC | QEC
 :-: | :-: | :-: | :-:
 [Video1](data/simulation.mp4)| [Video2](data/zac_code_out.mp4) | [Video3](examples/circuit-visualization/surface-code-1-aod.mp4) | [Video4](examples/circuit-visualization/surface-code-4-aod.mp4)
 
