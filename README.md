@@ -50,10 +50,10 @@ pip install -r requirements.txt
 
 ### 2. Demonstration of Quantum Simulation: Trotterized Time Evolution and Variational Approach
 
-#### 2.1 Time Independent Ising Model
+#### 2.1 Ising Model
 [Runnable Jupyter Notebook 2.1](submission/time_independent_ising_model.ipynb) 
 
-#### 2.2 Variational Approach with Schwinger Model
+#### 2.2 Schwinger Model
 [Runnable Jupyter Notebook 2.2](submit/variational.ipynb) 
 <img src="Figures/variational.png" alt="Result Of Variational Approach" width="300"> 
 
