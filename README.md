@@ -77,7 +77,7 @@ If you want to study and reproduce the time dependent ising model part of implem
 
 #### 2.2 Schwinger Model
 [Runnable Jupyter Notebook 2.2](submit/variational.ipynb) 
-<img src="Figures/variational.png" alt="Result Of Variational Approach" width="300"> 
+<!-- <img src="Figures/variational.png" alt="Result Of Variational Approach">  -->
 
 
 ### 3. Circuit optimization
