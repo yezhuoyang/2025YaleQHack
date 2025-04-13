@@ -14,6 +14,8 @@ class Animator():
     MUS_PER_FRM_SLOW = 2 / FPS # in slow motion, i.e., Rydberg
     CANVAS_PADDING = 30
     RYDBERG_PADDING = 3 # around each entanglement zone
+    
+    DEMO = False # set to True to save as gif instead of mp4
 
     # colors
     RYDBERG_COLOR = 'b'
@@ -63,7 +65,16 @@ class Animator():
             init_func=self.update_init,
             frames=self.INIT_FRM + num_frame,
         )
-        anim.save(output, writer=FFMpegWriter(self.FPS))
+        
+        # Dump the animation as a GIF using PillowWriter
+        if self.DEMO:
+            from matplotlib.animation import PillowWriter
+            gif_writer = PillowWriter(fps=10)
+            gif_filename = 'output.gif'
+            anim.save(gif_filename, writer=gif_writer)
+        else:
+            anim.save(output, writer=FFMpegWriter(self.FPS))
+
         
         self.progress_bar.close()
 
