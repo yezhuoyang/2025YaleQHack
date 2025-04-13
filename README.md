@@ -9,6 +9,17 @@ John Ye, Hanyu Wang, Harry Wang, Luca Niu, Victor Yu
 
 In this challenge, we explore two different area to demonstrate the power of new language feature, as well as software-hardware codesign. First, we implement error correction code such as repetition code and surface code. With the help of modularized design and function reusing, we show that we can also implement simple logical algorithm with surface code. We also use recursion to implement fault-tolerant syndrome measurement. Second, we implement a second-order Trotterized time evolution simulation of the transverse-field Ising model (TFIM)—a paradigmatic strongly correlated system exhibiting two distinct phases determined by the competition between spin-spin interactions and external transverse fields.By adiabatically tuning the Hamiltonian parameters, our simulations successfully detect the crossing of the critical point separating these phases. Furthermore, we optimize the quantum circuit to minimize the number of required pulses, demonstrating an efficient quantum simulation protocol for the TFIM. We have also put a lot of effort in figuring out the compilation automation pipeline, such that all of our algorithm can be compiled down to atom movements, we also use video to demonstrate our compilation. In the contest, we find some potential bugs in the provided packages. 
 
+## Learning Objectives
+By the end of this set of projects, you should be able to:
+- Implement quantum error correction codes including repetition codes and surface codes using Kirin's conditional programming features
+- Design fault-tolerant measurement circuits using recursive programming techniques in Bloqade
+- Simulate the transverse field Ising model using Trotterized evolution to observe quantum phase transitions
+- Implement and optimize variational quantum algorithms for finding ground states in multiple physical models
+- Apply circuit optimization techniques to maximize gate parallelism for neutral atom quantum hardware
+- Design efficient qubit placement and routing solutions for zoned neutral atom architectures
+- Visualize quantum algorithms at the hardware level with atom movements and Rydberg operations
+- Identify and troubleshooting in quantum programming frameworks
+
 ## Video demonstration
 caption1 | caption2
 :-: | :-:
@@ -62,7 +73,7 @@ If you want to study and reproduce the time dependent ising model part of implem
 ### 2. Demonstration of Quantum Simulation: Trotterized Time Evolution and Variational Approach
 
 #### 2.1 Ising Model
-[Runnable Jupyter Notebook 2.1](submission/time_independent_ising_model.ipynb) 
+[Runnable Jupyter Notebook 2.1](submission/ising_model.ipynb) 
 
 #### 2.2 Schwinger Model
 [Runnable Jupyter Notebook 2.2](submit/variational.ipynb) 
