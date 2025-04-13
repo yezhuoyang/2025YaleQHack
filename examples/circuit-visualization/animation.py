@@ -15,7 +15,7 @@ class Animator():
     CANVAS_PADDING = 30
     RYDBERG_PADDING = 3 # around each entanglement zone
     
-    DEMO = False # set to True to save as gif instead of mp4
+    DEMO = True # set to True to save as gif instead of mp4
 
     # colors
     RYDBERG_COLOR = 'b'

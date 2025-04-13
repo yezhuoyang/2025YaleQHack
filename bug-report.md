@@ -1,7 +1,7 @@
 
 In `schema.py`:
 ```python
-    # hanyu: add this function to dump the noise model (so that we can load it later)
+    # Add this function to dump the noise model (so that we can load it later)
     # will be called in QuEraSimulationResult to_json
     # will be loaded in `noise_model = NoiseModel(**json["noise_model"])`
     def model_dump(self, mode: str = "json"):
