@@ -79,7 +79,7 @@ We implement surface code, and show a small logical algorithm. Novel syntax feat
 [Runnable Jupyter Notebook 2.1](submission/ising_model.ipynb) 
 
 #### 2.2 Schwinger Model
-[Runnable Jupyter Notebook 2.2](submit/Variational.ipynb) 
+[Runnable Jupyter Notebook 2.2](submission/Variational.ipynb) 
 <img src="Figures/variational.png" alt="Result Of Variational Approach"> 
 
 
