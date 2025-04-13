@@ -1,6 +1,6 @@
 import numpy as np
 import sys
-sys.path.append('C:\Users\victo\OneDrive\Documents\GitHub\yquantum\2025YaleQHack\src\PauliHamiltonian.py')
+sys.path.append('/Users/harrywanghc/Developer/2025/2025YaleQHack/src/')
 from PauliHamiltonian import (
     PauliOp, PauliTerm, PauliHamiltonian, 
     create_transverse_field_ising_model
