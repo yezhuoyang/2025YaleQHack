@@ -90,6 +90,39 @@ def count_qasm_gates_simple(qasm_str):
 
 
 
+
+
+def score_file(qasm_file_path):
+    """
+    Score a QASM file based on the number of local/global 1-qubit and 2-qubit gates.
+    The score is calculated as follows:
+      - local_1q:    +0.2 points
+      - local_2q:    +0.4 points
+      - global_1q:   +0.1 points
+      - global_2q:   +0.4 points
+
+    Args:
+        qasm_file_path (str): Path to the QASM file to be scored.
+
+    Returns:
+        float: The total score based on the gate counts.
+    """
+    # Read the file into a string
+    with open(qasm_file_path, 'r', encoding='utf-8') as f:
+        qasm_str = f.read()
+
+    # Use your simple gate counter
+    gate_counts = count_qasm_gates_simple(qasm_str)
+
+    # Compute the score
+    total_score = (gate_counts['local_1q']  * 0.2 +
+                   gate_counts['local_2q']  * 0.4 +
+                   gate_counts['global_1q'] * 0.1 +
+                   gate_counts['global_2q'] * 0.4)
+    return total_score
+
+
+
 def score(qasm_str):
     """
     Score a QASM string based on the number of local/global 1-qubit and 2-qubit gates.
@@ -111,5 +144,14 @@ def score(qasm_str):
              gate_counts['global_1q'] * 0.1 +
              gate_counts['global_2q'] * 0.4)
     return score
+
+
+
+
+if __name__ == "__main__":
+    # Example usage:
+    qasm_file_path = "C:\Users\73747\Documents\GitHub\2025YaleQHack\qasm.txt"  # Replace with your QASM file path
+    score_value = score_file(qasm_file_path)
+    print(f"Score for {qasm_file_path}: {score_value:.2f}")
 
 
